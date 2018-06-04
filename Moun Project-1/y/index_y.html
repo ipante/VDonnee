@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Moun Project</title>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+		<link rel="stylesheet" type="text/css" href="../css/style.css">
+	</head>
+
+	<body class="Y">
+		<div class="container">
+			<br>
+
+			<div class="row">
+				<div class="col">
+					<h1 class="text-center header">Bibliothèque universitaire de Berne</h1>
+
+				  <p class="lead text-center">Les informations sur les statistiques du Livre du bibliothèque de Berne</p>
+				  <p class="lead text-center">
+				    <a class="btn btn-warning" href="../index.html" role="button">Accueil</a>
+				    <a class="btn btn-warning" href="books_y.html" role="button">Livres</a>
+				  </p>
+				  <hr class="my-4">
+
+				  <h4>Statistique des livres depuis 2016 à 2018:</h4>
+					<div class="btn-group" role="group" aria-label="Basic example">
+					  <button type="button" class="btn btn-warning btn2016" onclick="change('2016')">2016</button>
+					  <button type="button" class="btn btn-warning btn2017" onclick="change('2017')">2017</button>
+					  <button type="button" class="btn btn-warning btn2018 active" onclick="change('2018')">2018</button>
+					</div>
+
+					<svg id="book3"></svg>
+
+					<h4>Statistique d'utilisation des livres par université :</h4>
+					<svg id="college"></svg>
+
+					<h4>Statistique d'utilisation des livres par mois :</h4>
+					<svg id="date"></svg>
+
+					<h4>Statistique d'utilisation des livres par genre :</h4>
+					<svg id="gender"></svg>
+
+					<h3>Visitors consumption</h3>
+					<svg id="stu" width="100%" height="500"></svg>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+		<script type="text/javascript" src="../js/res.js"></script>
+
+		<script>
+			var perss = d3.select("#book3").call(responsivefy),
+			    margin = {top: 20, right: 20, bottom: 30, left: 40},
+			    facwidth = d3.select(".col").node().getBoundingClientRect().width - margin.left - margin.right,
+			    facheight = 500 - margin.top - margin.bottom;
+
+			var xx = d3.scaleBand().rangeRound([0, facwidth]).padding(0.1),
+			    yy = d3.scaleLinear().rangeRound([facheight, 0]);
+
+			var perssg = perss.append("g")
+			    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+			d3.tsv("2018books.tsv", function(d) {
+			  d.frequency = +d.frequency;
+			  return d;
+			}, function(error, data) {
+			  if (error) throw error;
+
+			  xx.domain(data.map(function(d) { return d.letter; }));
+			  yy.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+
+			  perssg.append("g")
+			      .attr("class", "axis axis--x")
+			      .attr("transform", "translate(0," + facheight + ")")
+			      .call(d3.axisBottom(xx));
+
+			  perssg.append("g")
+			      .attr("class", "axis axis--y")
+			      .call(d3.axisLeft(yy).ticks(10, "%"))
+			    .append("text")
+			      .attr("transform", "rotate(-90)")
+			      .attr("y", 6)
+			      .attr("dy", "0.71em")
+			      .attr("text-anchor", "end")
+			      .text("Frequency");
+
+			  perssg.selectAll(".bar")
+			    .data(data)
+			    .enter().append("rect")
+			      .attr("class", "bar")
+			      .attr("x", function(d) { return xx(d.letter); })
+			      .attr("y", function(d) { return yy(d.frequency); })
+			      .attr("width", xx.bandwidth())
+			      .attr("height", function(d) { return facheight - yy(d.frequency); });
+			});
+
+			function change(data){
+				if(data == "2016") {
+					$(".btn2017").removeClass("active");
+					$(".btn2018").removeClass("active");
+					$(".btn2016").addClass("active");
+				} else if(data == "2017") {
+					$(".btn2017").addClass("active");
+					$(".btn2018").removeClass("active");
+					$(".btn2016").removeClass("active");
+				} else {
+					$(".btn2017").removeClass("active");
+					$(".btn2018").addClass("active");
+					$(".btn2016").removeClass("active");
+				}
+
+				var bars = perss.selectAll(".bar")
+					.remove().exit();
+
+				perss.selectAll(".axis").remove();
+
+				d3.tsv(data + "books.tsv", function(d) {
+				  d.frequency = +d.frequency;
+				  return d;
+				}, function(error, data) {
+				  if (error) throw error;
+
+				  yy.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+
+				  perssg.append("g")
+			      .attr("class", "axis axis--x")
+			      .attr("transform", "translate(0," + facheight + ")")
+			      .call(d3.axisBottom(xx));
+
+				  perssg.append("g")
+				      .attr("class", "axis axis--y")
+				      .call(d3.axisLeft(yy).ticks(10, "%"))
+				    .append("text")
+				      .attr("transform", "rotate(-90)")
+				      .attr("y", 6)
+				      .attr("dy", "0.71em")
+				      .attr("text-anchor", "end")
+				      .text("Frequency");
+
+				  perssg.selectAll(".bar")
+				  	.data(data)
+				  	.enter()
+						.append("rect")
+						.attr("class", "bar")
+						.attr("x", function(d){ return xx(d.letter); })
+						.attr("y", function(d){ return yy(d.frequency); })
+						.attr("width", xx.bandwidth())
+						.attr("height", function(d){ return height - yy(d.frequency); });
+				});
+			}
+		</script>
+
+		<script>
+			var fac = d3.select("#college").call(responsivefy),
+			    margin = {top: 20, right: 20, bottom: 30, left: 40},
+			    width = d3.select(".col").node().getBoundingClientRect().width - margin.left - margin.right,
+			    height = 500 - margin.top - margin.bottom;
+
+			var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+			    y = d3.scaleLinear().rangeRound([height, 0]);
+
+			var facg = fac.append("g")
+			    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+			d3.tsv("fac_data.tsv", function(d) {
+			  d.frequency = +d.frequency;
+			  return d;
+			}, function(error, data) {
+			  if (error) throw error;
+
+			  x.domain(data.map(function(d) { return d.letter; }));
+			  y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+
+			  facg.append("g")
+			      .attr("class", "axis axis--x")
+			      .attr("transform", "translate(0," + height + ")")
+			      .call(d3.axisBottom(x));
+
+			  facg.append("g")
+			      .attr("class", "axis axis--y")
+			      .call(d3.axisLeft(y).ticks(10, "%"))
+			    .append("text")
+			      .attr("transform", "rotate(-90)")
+			      .attr("y", 6)
+			      .attr("dy", "0.71em")
+			      .attr("text-anchor", "end")
+			      .text("Frequency");
+
+			  facg.selectAll(".bar")
+			    .data(data)
+			    .enter().append("rect")
+			      .attr("class", "bar")
+			      .attr("x", function(d) { return x(d.letter); })
+			      .attr("y", function(d) { return y(d.frequency); })
+			      .attr("width", x.bandwidth())
+			      .attr("height", function(d) { return height - y(d.frequency); });
+			});
+		</script>
+
+		<script>
+			var gen = d3.select("#gender").call(responsivefy),
+			    margin = {top: 20, right: 20, bottom: 30, left: 40},
+			    width = d3.select(".col").node().getBoundingClientRect().width - margin.left - margin.right,
+			    height = 500 - margin.top - margin.bottom;
+
+			var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+			    y = d3.scaleLinear().rangeRound([height, 0]);
+
+			var geng = gen.append("g")
+			    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+			d3.tsv("gen_data.tsv", function(d) {
+			  d.frequency = +d.frequency;
+			  return d;
+			}, function(error, data) {
+			  if (error) throw error;
+
+			  x.domain(data.map(function(d) { return d.letter; }));
+			  y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+
+			  geng.append("g")
+			      .attr("class", "axis axis--x")
+			      .attr("transform", "translate(0," + height + ")")
+			      .call(d3.axisBottom(x));
+
+			  geng.append("g")
+			      .attr("class", "axis axis--y")
+			      .call(d3.axisLeft(y).ticks(10, "%"))
+			    .append("text")
+			      .attr("transform", "rotate(-90)")
+			      .attr("y", 6)
+			      .attr("dy", "0.71em")
+			      .attr("text-anchor", "end")
+			      .text("Frequency");
+
+			  geng.selectAll(".bar")
+			    .data(data)
+			    .enter().append("rect")
+			      .attr("class", "bar")
+			      .attr("x", function(d) { return x(d.letter); })
+			      .attr("y", function(d) { return y(d.frequency); })
+			      .attr("width", x.bandwidth())
+			      .attr("height", function(d) { return height - y(d.frequency); });
+			});
+		</script>
+
+		<script>
+			var dat = d3.select("#date").call(responsivefy),
+			    margin = {top: 20, right: 20, bottom: 30, left: 40},
+			    width = d3.select(".col").node().getBoundingClientRect().width - margin.left - margin.right,
+			    height = 500 - margin.top - margin.bottom;
+
+			var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+			    y = d3.scaleLinear().rangeRound([height, 0]);
+
+			var datg = dat.append("g")
+			    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+			d3.tsv("dat_data.tsv", function(d) {
+			  d.frequency = +d.frequency;
+			  return d;
+			}, function(error, data) {
+			  if (error) throw error;
+
+			  x.domain(data.map(function(d) { return d.letter; }));
+			  y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+
+			  datg.append("g")
+			      .attr("class", "axis axis--x")
+			      .attr("transform", "translate(0," + height + ")")
+			      .call(d3.axisBottom(x));
+
+			  datg.append("g")
+			      .attr("class", "axis axis--y")
+			      .call(d3.axisLeft(y).ticks(10, "%"))
+			    .append("text")
+			      .attr("transform", "rotate(-90)")
+			      .attr("y", 6)
+			      .attr("dy", "0.71em")
+			      .attr("text-anchor", "end")
+			      .text("Frequency");
+
+			  datg.selectAll(".bar")
+			    .data(data)
+			    .enter().append("rect")
+			      .attr("class", "bar")
+			      .attr("x", function(d) { return x(d.letter); })
+			      .attr("y", function(d) { return y(d.frequency); })
+			      .attr("width", x.bandwidth())
+			      .attr("height", function(d) { return height - y(d.frequency); });
+			});
+		</script>
+
+		<script type="text/javascript">
+			var stu = d3.select("#stu").call(responsivefy),
+			    stuwidth = +stu.attr("width"),
+			    stuheight = +stu.attr("height"),
+			    radius = Math.min(stuwidth, stuheight) / 2 - 15,
+			    stug = stu.append("g").attr("transform", "translate(" + stuwidth / 2 + "," + stuheight / 2 + ")");
+
+			var color = d3.scaleOrdinal(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+			var pie = d3.pie()
+			    .sort(null)
+			    .value(function(d) { return d.population; });
+
+			var path = d3.arc()
+			    .outerRadius(radius - 10)
+			    .innerRadius(0);
+
+			var label = d3.arc()
+			    .outerRadius(radius - 40)
+			    .innerRadius(radius - 40);
+
+			d3.tsv("stu_data.tsv", function(d) {
+			  d.population = +d.population;
+			  return d;
+			}, function(error, data) {
+			  if (error) throw error;
+
+			  var arc = stug.selectAll(".arc")
+			    .data(pie(data))
+			    .enter().append("g")
+			      .attr("class", "arc");
+
+			  arc.append("path")
+			      .attr("d", path)
+			      .attr("fill", function(d) { return color(d.data.age); });
+
+			  arc.append("text")
+			      .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")"; })
+			      .attr("dy", "0.35em")
+			      .text(function(d) { return d.data.age; });
+			});
+		</script>
+	</body>
+</html>

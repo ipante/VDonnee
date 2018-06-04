@@ -1,0 +1,51 @@
+{
+ "name": "books",
+ "children": [
+  {
+   "name": "PHP",
+   "children": [
+    {"name": "The Joy of PHP", "size": 50000},
+    {"name": "PHP & MySQL", "size": 40000},
+    {"name": "Head First PHP", "size": 55000},
+    {"name": "Learning PHP", "size": 30000}
+   ]
+  },
+  {
+   "name": "Ruby",
+   "children": [
+    {"name": "The Ruby Programming Language", "size": 100000},
+    {"name": "Head First Ruby: A Brain-Friendly Guide", "size": 150000},
+    {"name": "The Well-Grounded Rubyist", "size": 90000},
+    {"name": "Beginning Ruby: From Novice to Professional", "size": 175000}
+   ]
+  },
+  {
+   "name": "Computer Architecture",
+   "children": [
+    {"name": "Computer System Architecture Book", "size": 100000},
+    {"name": "Computer Architecture: A Quantitative Approach Book", "size": 150000}
+   ]
+  },
+  {
+   "name": "Artificial Intelligence",
+   "children": [
+    {"name": "Introduction to Artificial Intelligence", "size": 125000},
+    {"name": "Deep Learning", "size": 150000},
+    {"name": "The Elements of Statistical Learning", "size": 200000},
+    {"name": "Python Machine Learning", "size": 80000},
+    {"name": "How to Create a Mind", "size": 190000},
+    {"name": "Artificial Intelligence and Soft Computing", "size": 250000}
+   ]
+  },
+  {
+   "name": "Java",
+   "children": [
+    {"name": "Core Java Volume I", "size": 125000},
+    {"name": "Java: The Complete Reference", "size": 150000},
+    {"name": "Murach’s Beginning Java with Eclipse", "size": 200000},
+    {"name": "Java 8 in Action", "size": 80000},
+    {"name": "Java Cookbook", "size": 140000}
+   ]
+  }
+  ]
+}

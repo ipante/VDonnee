@@ -1,0 +1,52 @@
+{
+ "name": "books",
+ "children": [
+  {
+   "name": "Digital",
+   "children": [
+    {"name": "Digital Design: Principles and Practices", "size": 250000},
+    {"name": "Digital Design: with an Introduction to the Verilog Hdl", "size": 290000},
+    {"name": "Digital Design: An Embedded Systems Approach Using VERILOG", "size": 300000}
+   ]
+  },
+  {
+   "name": "Computer Vision",
+   "children": [
+    {"name": "Computer Vision: Algorithms and Applications", "size": 100000},
+    {"name": "Learning OpenCV: Computer Vision with the OpenCV", "size": 150000},
+    {"name": "Computer Vision: Models, Learning, and Inference", "size": 90000},
+    {"name": "Multiple View Geometry in Computer Vision ", "size": 175000}
+   ]
+  },
+  {
+   "name": "Image Processing",
+   "children": [
+    {"name": "Principles of digital image processing", "size": 150000},
+    {"name": "Morphological image analysis", "size": 100000},
+    {"name": "Feature extraction & image processing for computer vision", "size": 170000},
+    {"name": "Algorithms f or image processing and computer graphics", "size": 160000}
+   ]
+  },
+  {
+   "name": "Information Retrieval",
+   "children": [
+    {"name": "Introduction to information retrieval", "size": 125000},
+    {"name": "Modern Information Retrieval", "size": 150000},
+    {"name": "Search Engines: Information Retrieval in Practice", "size": 200000},
+    {"name": "Information Retrieval: Algorithms and Heuristics", "size": 180000},
+    {"name": "Information Retrieval: Implementing and Evaluating Search Engines", "size": 370000},
+    {"name": "Information storage and retrieval systems", "size": 250000}
+   ]
+  },
+  {
+   "name": "Database",
+   "children": [
+    {"name": "Database System Concepts", "size": 125000},
+    {"name": "Seven Databases in Seven Weeks", "size": 150000},
+    {"name": "High Performance MySQL: Optimization", "size": 200000},
+    {"name": "SQL and Relational Theory", "size": 80000},
+    {"name": "MongoDB: The Definitive Guide", "size": 140000}
+   ]
+  }
+  ]
+}

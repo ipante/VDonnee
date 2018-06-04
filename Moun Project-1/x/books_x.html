@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Moun Project</title>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+		<link rel="stylesheet" type="text/css" href="../css/style.css">
+	</head>
+
+	<body class="X">
+		<div class="container">
+			<br>
+
+			<div class="row">
+				<div class="col">
+				  <h1 class="text-center header">Bibliothèque centrale de Zurich</h1>
+				  <p class="lead text-center">Informations sur les statistiques du Bibliothèque centrale de Zurich</p>
+				  <p class="lead text-center">
+				    <a class="btn btn-warning" href="../index.html" role="button">Accueil</a>
+				    <a class="btn btn-warning" href="index_x.html" role="button">Statistique</a>
+				  </p>
+				  <hr class="my-4">
+
+					<h3>Les informations des Livres:</h3>
+
+					<center>
+						<svg id="book2" width="100%" height="500"></svg>
+					<center>
+					
+					<center>
+						<svg id="book" width="100%" height="1100"></svg>
+					<center>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+		<script type="text/javascript" src="../js/res.js"></script>
+
+		<script type="text/javascript">
+			var treeData =
+			  {
+				 "name": "Library X",
+				 "children": [
+				  {
+				   "name": "PHP",
+				   "children": [
+				    {"name": "The Joy of PHP", "size": 50000},
+				    {"name": "PHP & MySQL", "size": 40000},
+				    {"name": "Head First PHP", "size": 55000},
+				    {"name": "Learning PHP", "size": 30000}
+				   ]
+				  },
+				  {
+				   "name": "Ruby",
+				   "children": [
+				    {"name": "The Ruby Programming Language", "size": 100000},
+				    {"name": "Head First Ruby: A Brain-Friendly Guide", "size": 150000},
+				    {"name": "The Well-Grounded Rubyist", "size": 90000},
+				    {"name": "Beginning Ruby: From Novice to Professional", "size": 175000}
+				   ]
+				  },
+				  {
+				   "name": "Computer Architecture",
+				   "children": [
+				    {"name": "Computer System Architecture Book", "size": 100000},
+				    {"name": "Computer Architecture: A Quantitative Approach Book", "size": 150000}
+				   ]
+				  },
+				  {
+				   "name": "Artificial Intelligence",
+				   "children": [
+				    {"name": "Introduction to Artificial Intelligence", "size": 125000},
+				    {"name": "Deep Learning", "size": 150000},
+				    {"name": "The Elements of Statistical Learning", "size": 200000},
+				    {"name": "Python Machine Learning", "size": 80000},
+				    {"name": "How to Create a Mind", "size": 190000},
+				    {"name": "Artificial Intelligence and Soft Computing", "size": 250000}
+				   ]
+				  },
+				  {
+				   "name": "Java",
+				   "children": [
+				    {"name": "Core Java Volume I", "size": 125000},
+				    {"name": "Java: The Complete Reference", "size": 150000},
+				    {"name": "Murach’s Beginning Java with Eclipse", "size": 200000},
+				    {"name": "Java 8 in Action", "size": 80000},
+				    {"name": "Java Cookbook", "size": 140000}
+				   ]
+				  }
+				  ]
+				};
+
+			// Set the dimensions and margins of the diagram
+			var margin = {top: 20, right: 90, bottom: 30, left: 90},
+			    width = 960 - margin.left - margin.right,
+			    height = 500 - margin.top - margin.bottom;
+
+			// append the svg object to the body of the page
+			// appends a 'group' element to 'svg'
+			// moves the 'group' element to the top left margin
+			var svg2 = d3.select("#book2")
+			    .attr("width", width + margin.right + margin.left)
+			    .attr("height", height + margin.top + margin.bottom).call(responsivefy)
+			  .append("g")
+			    .attr("transform", "translate("
+			          + margin.left + "," + margin.top + ")");
+
+			var i = 0,
+			    duration = 750,
+			    roott;
+
+			// declares a tree layout and assigns the size
+			var treemap = d3.tree().size([height, width]);
+
+			// Assigns parent, children, height, depth
+			roott = d3.hierarchy(treeData, function(d) { return d.children; });
+			roott.x0 = height / 2;
+			roott.y0 = 0;
+
+			update(roott);
+
+			// Collapse the node and all it's children
+			function collapse(d) {
+			  if(d.children) {
+			    d._children = d.children
+			    d._children.forEach(collapse)
+			    d.children = null
+			  }
+			}
+
+			function update(source) {
+
+			  // Assigns the x and y position for the nodes
+			  var treeData = treemap(roott);
+
+			  // Compute the new tree layout.
+			  var nodes = treeData.descendants(),
+			      links = treeData.descendants().slice(1);
+
+			  // Normalize for fixed-depth.
+			  nodes.forEach(function(d){ d.y = d.depth * 180});
+
+			  // ****************** Nodes section ***************************
+
+			  // Update the nodes...
+			  var node = svg2.selectAll('g.node')
+			      .data(nodes, function(d) {return d.id || (d.id = ++i); });
+
+			  // Enter any new modes at the parent's previous position.
+			  var nodeEnter = node.enter().append('g')
+			      .attr('class', 'node')
+			      .attr("transform", function(d) {
+			        return "translate(" + source.y0 + "," + source.x0 + ")";
+			    })
+			    .on('click', click);
+
+			  // Add Circle for the nodes
+			  nodeEnter.append('circle')
+			      .attr('class', 'node')
+			      .attr('r', 1e-6)
+			      .style("fill", function(d) {
+			          return d._children ? "#ffc107" : "#fff";
+			      });
+
+			  // Add labels for the nodes
+			  nodeEnter.append('text')
+			      .attr("dy", ".35em")
+			      .attr("x", function(d) {
+			          return d.children || d._children ? -13 : 13;
+			      })
+			      .attr("text-anchor", function(d) {
+			          return d.children || d._children ? "end" : "start";
+			      })
+			      .text(function(d) { return d.data.name; });
+
+			  // UPDATE
+			  var nodeUpdate = nodeEnter.merge(node);
+
+			  // Transition to the proper position for the node
+			  nodeUpdate.transition()
+			    .duration(duration)
+			    .attr("transform", function(d) { 
+			        return "translate(" + d.y + "," + d.x + ")";
+			     });
+
+			  // Update the node attributes and style
+			  nodeUpdate.select('circle.node')
+			    .attr('r', 10)
+			    .style("fill", function(d) {
+			        return d._children ? "#ffc107" : "#ffc107";
+			    })
+			    .attr('cursor', 'pointer');
+
+
+			  // Remove any exiting nodes
+			  var nodeExit = node.exit().transition()
+			      .duration(duration)
+			      .attr("transform", function(d) {
+			          return "translate(" + source.y + "," + source.x + ")";
+			      })
+			      .remove();
+
+			  // On exit reduce the node circles size to 0
+			  nodeExit.select('circle')
+			    .attr('r', 1e-6);
+
+			  // On exit reduce the opacity of text labels
+			  nodeExit.select('text')
+			    .style('fill-opacity', 1e-6);
+
+			  // ****************** links section ***************************
+
+			  // Update the links...
+			  var link = svg2.selectAll('path.link')
+			      .data(links, function(d) { return d.id; });
+
+			  // Enter any new links at the parent's previous position.
+			  var linkEnter = link.enter().insert('path', "g")
+			      .attr("class", "link")
+			      .attr('d', function(d){
+			        var o = {x: source.x0, y: source.y0}
+			        return diagonal(o, o)
+			      });
+
+			  // UPDATE
+			  var linkUpdate = linkEnter.merge(link);
+
+			  // Transition back to the parent element position
+			  linkUpdate.transition()
+			      .duration(duration)
+			      .attr('d', function(d){ return diagonal(d, d.parent) });
+
+			  // Remove any exiting links
+			  var linkExit = link.exit().transition()
+			      .duration(duration)
+			      .attr('d', function(d) {
+			        var o = {x: source.x, y: source.y}
+			        return diagonal(o, o)
+			      })
+			      .remove();
+
+			  // Store the old positions for transition.
+			  nodes.forEach(function(d){
+			    d.x0 = d.x;
+			    d.y0 = d.y;
+			  });
+
+			  // Creates a curved (diagonal) path from parent to the child nodes
+			  function diagonal(s, d) {
+
+			    path = `M ${s.y} ${s.x}
+			            C ${(s.y + d.y) / 2} ${s.x},
+			              ${(s.y + d.y) / 2} ${d.x},
+			              ${d.y} ${d.x}`
+
+			    return path
+			  }
+
+			  // Toggle children on click.
+			  function click(d) {
+			    if (d.children) {
+			        d._children = d.children;
+			        d.children = null;
+			      } else {
+			        d.children = d._children;
+			        d._children = null;
+			      }
+			    update(d);
+			  }
+			}
+		</script>
+
+		<script>
+			var svg = d3.select("#book").call(responsivefy),
+			    margin = 20,
+			    diameter = +svg.attr("width"),
+			    g = svg.append("g").attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+
+			var color = d3.scaleLinear()
+			    .domain([-1, 5])
+			    .range(["hsl(25, 100%, 50%)", "hsl(100, 100%, 50%)"])
+			    .interpolate(d3.interpolateHcl);
+
+			var pack = d3.pack()
+			    .size([diameter - margin, diameter - margin])
+			    .padding(2);
+
+			d3.json("books.json", function(error, root) {
+			  if (error) throw error;
+
+			  root = d3.hierarchy(root)
+			      .sum(function(d) { return d.size; })
+			      .sort(function(a, b) { return b.value - a.value; });
+
+			  var focus = root,
+			      nodes = pack(root).descendants(),
+			      view;
+
+			  var circle = g.selectAll("circle")
+			    .data(nodes)
+			    .enter().append("circle")
+			      .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
+			      .style("fill", function(d) { return d.children ? color(d.depth) : null; })
+			      .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
+
+			  var text = g.selectAll("text")
+			    .data(nodes)
+			    .enter().append("text")
+			      .attr("class", "label")
+			      .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0; })
+			      .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
+			      .text(function(d) { return d.data.name; });
+
+			  var node = g.selectAll("circle,text");
+
+			  svg.on("click", function() { zoom(root); });
+
+			  zoomTo([root.x, root.y, root.r * 2 + margin]);
+
+			  function zoom(d) {
+			    var focus0 = focus; focus = d;
+
+			    var transition = d3.transition()
+			        .duration(d3.event.altKey ? 7500 : 750)
+			        .tween("zoom", function(d) {
+			          var i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2 + margin]);
+			          return function(t) { zoomTo(i(t)); };
+			        });
+
+					transition.selectAll("text")
+			      .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+			        .style("fill-opacity", function(d) { return d.parent === focus ? 1 : 0; })
+			        .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
+			        .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
+			  }
+
+			  function zoomTo(v) {
+			    var k = diameter / v[2]; view = v;
+			    node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
+			    circle.attr("r", function(d) { return d.r * k; });
+			  }
+			});
+		</script>
+	</body>
+</html>

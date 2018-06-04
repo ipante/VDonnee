@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>visualisation de donnée</title>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+	</head>
+
+	<body>
+		<div id="map"></div>
+
+		<script>
+      function initMap() {
+      	var locations = [
+	        ['Bibliothèque centrale', 47.3994823, 8.5453105, 'x/index_x.html'],
+	        ['Bibliothèque universitaire', 46.9691132, 7.4469811, 'y/index_y.html'],
+	        ['Bibliothèque cantonale et universitaire', 46.5436887, 6.6376798, 'z/index_z.html']
+	      ]
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 9,
+          center: {lat: 46.7781481, lng: 8.3437316}
+        });
+        var markers = locations.map(function(location, i) {
+          var marker = new google.maps.Marker({
+            label: location[0],
+            position: {lat: location[1], lng: location[2]},
+            url: location[3],
+            map: map
+          });
+
+          google.maps.event.addListener(marker, 'click', function() {
+						window.location.href = this.url;
+					});
+
+					return marker;
+        });
+      }
+    </script>
+
+		<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJ_pd0NKGpS7P1MGbAABWBFygaQIgZ5Ro&callback=initMap">
+    </script>
+	</body>
+</html>

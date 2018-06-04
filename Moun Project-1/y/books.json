@@ -1,0 +1,61 @@
+{
+ "name": "books",
+ "children": [
+  {
+   "name": "HCI",
+   "children": [
+    {"name": "100 Things Every Designer Needs to Know", "size": 200000},
+    {"name": "About Face 3", "size": 35000},
+    {"name": "Designing Interactions", "size": 55000},
+    {"name": "Designing the User Interface", "size": 85000},
+    {"name": "Designing with the Mind in Mind", "size": 100000},
+    {"name": "Don't Make Me Think", "size": 30000},
+    {"name": "Gamestorming", "size": 30000}
+   ]
+  },
+  {
+   "name": "Cloud Computing",
+   "children": [
+    {"name": "Cloud Computing: From Beginning to End", "size": 125000},
+    {"name": "Cloud Computing: A Hands-On Approach", "size": 150000},
+    {"name": "Cloud Computing: Concepts, Technology & Architecture", "size": 250000},
+    {"name": "Cloud Computing Design Patterns", "size": 170000},
+    {"name": "Cloudonomics: The Business Value of Cloud Computing", "size": 225000},
+    {"name": "Amazon Web Services for Dummies", "size": 175000}
+   ]
+  },
+  {
+   "name": "Algorithms",
+   "children": [
+    {"name": "Introduction to Algorithms", "size": 100000},
+    {"name": "Algorithms", "size": 50000},
+    {"name": "The Algorithm Design Manual", "size": 150000},
+    {"name": "Algorithm for Interviews", "size": 125000},
+    {"name": "Algorithm in Nutshell", "size": 120000},
+    {"name": "Algorithm Design", "size": 110000},
+    {"name": "Introduction to Algorithms: A Creative Approach", "size": 250000},
+    {"name": "The Design and Analysis of Algorithms", "size": 175000},
+    {"name": "Data Structures and Algorithms", "size": 160000},
+    {"name": "Python Algorithms", "size": 100000}
+   ]
+  },
+  {
+   "name": "Testing",
+   "children": [
+    {"name": "Lessons Learned in Software Testing", "size": 100000},
+    {"name": "Beautiful Testing", "size": 60000},
+    {"name": "Software Testing", "size": 50000}
+   ]
+  },
+  {
+   "name": "Python",
+   "children": [
+    {"name": "Python Crash Course", "size": 125000},
+    {"name": "Effective Python", "size": 150000},
+    {"name": "Python Cookbook", "size": 100000},
+    {"name": "Fluent Python", "size": 80000},
+    {"name": "Learning Python", "size": 140000}
+   ]
+  }
+  ]
+}

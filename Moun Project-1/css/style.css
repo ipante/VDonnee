@@ -1,0 +1,106 @@
+.X {
+  background-image: url(../x/x.jpg);
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.Y {
+  background-image: url(../y/y.jpg);
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.Z {
+  background-image: url(../z/z.jpg);
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.header {
+  text-decoration: underline;
+  font-size: 50px;
+}
+
+#map {
+  height: 100vh;
+  background-color: grey;
+}
+
+#college, #gender, #date, #book3 {
+  width: 100%;
+  height: 500px;
+}
+
+.container {
+  background: white;
+}
+
+.axis--x path,
+.axis--x line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: orange;
+}
+
+.bar:hover {
+  fill: orangered ;
+}
+
+.axis--x path {
+  display: none;
+}
+
+.node {
+  cursor: pointer;
+}
+
+.node--leaf {
+  fill: white;
+}
+
+.label {
+  font: 15px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-anchor: middle;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+}
+
+.label,
+.node--root,
+.node--leaf {
+  pointer-events: none;
+}
+
+.node circle {
+  fill: #fff;
+  stroke: #f98600;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font: 10px sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+.arc text {
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+.arc path {
+  stroke: #fff;
+}
