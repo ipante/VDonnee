@@ -20,4 +20,3 @@ Dans la page de statistique d’utilisation des livres il y a plusieurs graphiqu
 <h3>4-	Auteur du travail:</h3>
 Ce travail a été réalisé par Mounira ELmezrigui dans le cadre du cours de « visualisation de donnée » donné à l’Université de Lausanne (Unil) par Monsieur Isaac Pante. Le lien suivant permet d'accéder à la section des sciences du langages et de l'information de l'Unil pour plus de détails : https://www.unil.ch/sli/fr/home.html.
 
-<h3>5-	 Sources :</h3>
