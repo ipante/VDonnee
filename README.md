@@ -4,8 +4,7 @@ Le projet de statistique des livres dans quelque bibliothèque en Suisse. Tout d
 L’idée de projet était de connaître l’utilisation des livres par personnes, par université par année et par mois. Une description détaillée se trouve sous forme d’histogramme, cercle et arbre pour le projet de visualisation de donnée.
 L’objectif de ce projet est de réaliser une explication de statistique des livres et ses descriptions détaillées, simple et facile à lire pour les utilisateurs. 
 Le projet est fait pour l’ordinateur, la tablette et le téléphone portable.
-     Le lien suivant en montre le résultat : https://mounira.000webhostapp.com/mounira_visdon/
-     
+Le lien suivant en montre le résultat : https://mounira.000webhostapp.com/mounira_visdon/
      
 <h3>2-	Structure des fichiers : </h3>
 Fichier HTML (Hypertext Markup Language) : ce fichier est la page principale du livre que nous avons réalisé. Ce fichier qui regroupe les liens des autres fichiers et elle sera affichée sur le navigateur.
@@ -15,15 +14,15 @@ Dossier X, Y, Z : chaque dossier contient deux fichiers html une pour les statis
 
 <h3>3-	Fonctionnalités :</h3>
 Le projet contient une interface principale où se trouve une carte géographique et contient trois noms de bibliothèques de différentes régions en Suisse. Un clic sur le nom d’une bibliothèque nous amène directement vers la page qui contient le statistique de livres de cette bibliothèque. Dans cette page, il y a un titre en haut et après on trouve deux boutons; le premier s’appelle accueil et avec un simple clic on retourne à la page principale l’autre s’appelle le livre et il nous amène à la page de description du livre. Cette page contient un arbre qui montre les différentes informations sur le livre informatique et un grand cercle qui regroupe les différentes informations sur les autres livres informatiques.
-<h4>Figure 1:</h4>
+<img src ="4.jpg" alt="img4"/>
 
 Dans la page de statistique d’utilisation des livres il y a plusieurs graphiques : le premier est l’utilisation de 2016 à 2018 et un simple clic sur l’année affiche le graphe d’utilisation du livre de cette année. Si on clique sur le graphe la couleur change. 
-<h4>Figure 2:</h4>
+<img src ="1.jpg" alt="img1"/>
 Dans l’autre page, il y a un arbre où on peut soit cacher les informations soit découvrir ce qu’on veut voir parmi les informations des livres. 
-<h4>Figure 3:</h4>
+<img src ="2.jpg" alt="img2"/>
 L’autre graphique est un cercle qui regroupe les noms des livre de différents disciplines. Le projet est responsif, on peut le lire sur un ordinateur, une tablette ou un téléphone portable.
-<h4>Figure 4:</h4>
+<img src ="5.jpg" alt="img5"/>
 
 <h3>4-	Auteur du travail:</h3>
-Ce travail a été réalisé par Mounira ELmezrigui dans le cadre du cours de « visualisation de donnée » donné à l’Université de Lausanne (Unil) par Monsieur Isaac Pante. Le lien suivant permet d'accéder à la section des sciences du langages et de l'information de l'Unil pour plus de détails : https://www.unil.ch/sli/fr/home.html.
+Ce travail a été réalisé par <strong><I>Mounira ELmezrigui</I></strong> dans le cadre du cours de « visualisation de donnée » donné à <strong>l’Université de Lausanne</strong> <I>(Unil)</I> par <strong>Monsieur Isaac Pante</strong>. Le lien suivant permet d'accéder à la section des sciences du langages et de l'information de l'Unil pour plus de détails : https://www.unil.ch/sli/fr/home.html.
 
